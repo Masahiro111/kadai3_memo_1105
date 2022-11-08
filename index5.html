@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
     <head>
         <meta charset="UTF-8">
@@ -9,6 +9,10 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <style>
+            [x-cloak] {
+                display: none !important;
+            }
+
             .group:hover .group-hover\:flex {
                 display: flex !important;
             }
@@ -43,9 +47,9 @@
         </style>
     </head>
 
-    <body class="antialiased sans-serif bg-gray-300">
+    <body>
         <!-- Alert Box -->
-        <div class="fixed w-full z-50 flex inset-0 items-start justify-center pointer-events-none md:mt-5"
+        <!-- <div class="fixed w-full z-50 flex inset-0 items-start justify-center pointer-events-none md:mt-5"
              x-data="{ 
                 message: '', 
                 showFlashMessage(event) {
@@ -76,26 +80,41 @@
                     </div>
                 </div>
             </template>
-        </div>
+        </div> -->
         <!-- /Alert Box -->
 
         <div
              x-data="app()"
              x-init="getTasks()"
-             x-cloak class="flex flex-col min-h-screen border-t-8"
+             x-cloak
+             class="flex flex-col text-gray-700 min-h-screen bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200"
              :class="`border-${colorSelected.value}-700`">
             <div class="flex-1">
 
                 <!-- Header -->
-                <div
+                <!-- <div
                      class="bg-cover bg-center bg-no-repeat"
                      :class="`bg-${colorSelected.value}-900`"
                      :style="`background-image: url(${bannerImage})`">
                     <div class="container mx-auto px-4 pt-4 md:pt-10 pb-40"></div>
+                </div> -->
+                <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
+                    <svg class="w-8 h-8 text-indigo-600 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                    <input class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…">
+                    <div class="ml-10">
+                        <a class="mx-2 text-sm font-semibold text-indigo-700" href="#">Projects</a>
+                        <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="#">Team</a>
+                        <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="#">Activity</a>
+                    </div>
+                    <buton class="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
+                        <img src="https://assets.codepen.io/5041378/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1600304177&width=512" alt="">
+                    </buton>
                 </div>
                 <!-- /Header -->
 
-                <div class="container mx-auto px-4 py-4 -mt-40">
+                <div class="container mx-auto px-4 py-4">
 
                     <!-- Welcome Page -->
                     <div x-show="!localStorage.getItem('TG-username')">

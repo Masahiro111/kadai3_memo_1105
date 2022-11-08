@@ -180,7 +180,6 @@
                             <!-- Greetings -->
                             <div class="flex justify-between items-center mb-2">
                                 <div>
-                                    <h1 class="text-xl md:text-2xl text-gray-300 font-semibold" x-text="greetText()"></h1>
                                     <div x-text="formatDateDisplay(new Date())" class="text-sm" :class="`text-${colorSelected.value}-400`"></div>
                                 </div>
                                 <div>
@@ -481,20 +480,6 @@
                             }
                         });
                         window.dispatchEvent(customEvent);
-                    },
-                    greetText() {
-                        var d = new Date();
-                        var time = d.getHours();
-                        // From: https://1loc.dev/ (Uppercase the first character of each word in a string)
-                        const uppercaseWords = str => str.split(' ').map(w => `${w.charAt(0).toUpperCase()}${w.slice(1)}`).join(' ');
-                        let name = localStorage.getItem('TG-username') || '';
-                        if (time < 12) {
-                            return "Good morning, " + uppercaseWords(name);
-                        } else if (time < 17) {
-                            return "Good afternoon, " + uppercaseWords(name);
-                        } else {
-                            return "Good evening, " + uppercaseWords(name);
-                        }
                     },
                 }
             }

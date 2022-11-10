@@ -57,7 +57,7 @@ export default class Item {
 		return range.createContextualFragment(`
 			<div draggable="true" class="kanban__item">
 				<div class="relative flex flex-col items-start bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
-					<h4 contenteditable class="kanban__item-input p-4 box-border text-sm font-medium"></h4>
+					<h4 class="kanban__item-input p-4 box-border text-sm font-medium" contenteditable="true"></h4>
 				</div>
 			</div>
 		`).children[0];

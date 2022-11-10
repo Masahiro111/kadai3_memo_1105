@@ -33,9 +33,9 @@ export default class Column {
 		range.selectNode(document.body);
 
 		return range.createContextualFragment(`
-			<div class="kanban__column flex flex-col flex-shrink-0 w-72">
+			<div class="kanban__column flex flex-1 flex-col flex-shrink-0 w-72">
 
-				<div class="flex items-center flex-shrink-0 h-10 px-2">
+				<div class="flex items-center flex-shrink-0 h-6 mt-8">
 					<span class="kanban__column-title block text-sm font-semibold"></span>
 				</div>
 
@@ -43,7 +43,7 @@ export default class Column {
 					<div class="kanban__column-items"></div>
 				</div>
 
-				<button class="kanban__add-item -mt-2" type="button">+ Add</button>
+				<button class="kanban__add-item -mt-2 w-full py-3 bg-gradient-to-tr from-indigo-300 to-purple-300 hover:from-indigo-500 hover:to-purple-500 text-white border-0 rounded-md cursor-pointer" type="button">+ Add</button>
 			</div>
 		`).children[0];
 	}

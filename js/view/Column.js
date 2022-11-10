@@ -43,7 +43,7 @@ export default class Column {
 					<div class="kanban__column-items"></div>
 				</div>
 
-				<button class="kanban__add-item -mt-2 w-full py-3 bg-gradient-to-tr from-indigo-300 to-purple-300 hover:from-indigo-500 hover:to-purple-500 text-white border-0 rounded-md cursor-pointer" type="button">+ Add</button>
+				<button class="kanban__add-item -mt-2 w-full py-3 bg-gradient-to-tr from-indigo-400 to-purple-400 hover:from-indigo-500 hover:to-purple-500 text-white border-0 rounded-md cursor-pointer" type="button">+ Add</button>
 			</div>
 		`).children[0];
 	}

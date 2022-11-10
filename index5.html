@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>G's Task Manager</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <style>
             [x-cloak] {
                 display: none !important;
@@ -248,7 +247,8 @@
                                             <span
                                                   x-text="board"
                                                   class="block text-sm font-semibold"></span>
-                                            <span class="flex items-center justify-center w-5 h-5 ml-2 text-sm font-semibold text-indigo-500 bg-white rounded bg-opacity-30">6</span>
+                                            <span
+                                                  class="flex items-center justify-center w-5 h-5 ml-2 text-sm font-semibold text-indigo-500 bg-white rounded bg-opacity-30"></span>
                                             <button
                                                     @click.prevent="showModal(board)"
                                                     class="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
@@ -258,31 +258,8 @@
                                             </button>
                                         </div>
 
-                                        <div class="flex flex-col pb-2" style="min-height: 100px">
-
-                                            <div class="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
-
-                                                <button class="absolute top-0 right-0 flex items-center justify-center w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                                                    <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                    </svg>
-                                                </button>
-                                                <span class="flex items-center h-6 px-3 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full">Design</span>
-                                                <h4 class="mt-3 text-sm font-medium">This is the title of the card for the thing that needs to be done.</h4>
-                                                <div class="flex items-center w-full mt-3 text-xs font-medium text-gray-400">
-                                                    <div class="flex items-center">
-                                                        <svg class="w-4 h-4 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <span class="ml-1 leading-none">Dec 12</span>
-                                                    </div>
-                                                    <img class="w-6 h-6 ml-auto rounded-full" src='https://randomuser.me/api/portraits/women/26.jpg' />
-                                                </div>
-                                            </div>
-
-                                        </div>
-
                                         <div
+                                             :id="if(board == 'ToDo') return 'todo'; if(board == 'In Progress') return 'in-progress'; if(board == 'Review') return 'review'; if(board == 'Done') return 'done';"
                                              class="flex flex-col pb-2"
                                              style="min-height: 100px"
                                              @dragover="onDragOver(event)"
@@ -429,48 +406,14 @@
             </div>
             <!-- /Modal -->
         </div>
-
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'></script>
         <script>
             function app() {
                 return {
                     showSettingsPage: false,
                     openModal: false,
-                    colors: [{
-                        label: '#3182ce',
-                        value: 'blue'
-                    },
-                    {
-                        label: '#38a169',
-                        value: 'green'
-                    },
-                    {
-                        label: '#805ad5',
-                        value: 'purple'
-                    },
-                    {
-                        label: '#e53e3e',
-                        value: 'red'
-                    },
-                    {
-                        label: '#dd6b20',
-                        value: 'orange'
-                    },
-                    {
-                        label: '#5a67d8',
-                        value: 'indigo'
-                    },
-                    {
-                        label: '#319795',
-                        value: 'teal'
-                    },
-                    {
-                        label: '#718096',
-                        value: 'gray'
-                    },
-                    {
-                        label: '#d69e2e',
-                        value: 'yellow'
-                    }
+                    colors: [
                     ],
                     colorSelected: {
                         label: '#3182ce',
@@ -478,10 +421,10 @@
                     },
                     dateDisplay: 'toDateString',
                     boards: [
-                        'Todo',
+                        'ToDo',
                         'In Progress',
                         'Review',
-                        'Done'
+                        'Done',
                     ],
                     task: {
                         name: '',
@@ -491,9 +434,7 @@
                     editTask: {},
                     tasks: [],
                     formatDateDisplay(date) {
-                        if (this.dateDisplay === 'toDateString') return new Date(date).toDateString();
-                        if (this.dateDisplay === 'toLocaleDateString') return new Date(date).toLocaleDateString('en-GB');
-                        return new Date().toLocaleDateString('en-GB');
+                        return new Date().toLocaleDateString('jp');
                     },
                     showModal(board) {
                         this.task.boardName = board;
@@ -574,6 +515,8 @@
                         // Back to Main Page
                         this.showSettingsPage = false;
                     },
+
+
                     onDragStart(event, uuid) {
                         event.dataTransfer.setData('text/plain', uuid);
                         event.target.classList.add('opacity-5');
@@ -612,6 +555,8 @@
                         this.dispatchCustomEvents('flash', 'Task moved to ' + boardName);
                         event.dataTransfer.clearData();
                     },
+
+
                     saveDataToLocalStorage(data, keyName) {
                         var a = [];
                         // Parse the serialized data back into an aray of objects
@@ -638,6 +583,13 @@
                     },
                 }
             }
+
+            dragula([
+                document.querySelector('#todo'),
+                document.querySelector('#in-progress'),
+                document.querySelector('#review'),
+                document.querySelector('#done'),
+            ]);
         </script>
 
     </body>

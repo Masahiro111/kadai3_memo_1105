@@ -8,6 +8,12 @@
 		<title>Kanban Board</title>
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="stylesheet" href="css/main.css">
+		<style>
+			.highlight {
+				font-weight: bold;
+				background-color: Yellow;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -15,7 +21,26 @@
 		<div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
 			<div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
 				<img src="images/index.png" class="w-8" alt="" srcset="">
-				<input class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…">
+
+				<input
+					   class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring"
+					   type="search"
+					   placeholder="Search for anything…"
+					   id="word"
+					   placeholder="ページ内テキスト検索" />
+				<input
+					   type="button"
+					   onclick="doHighlight()"
+					   value="検索"
+					   class="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold rounded-lg mr-2" />
+				<input
+					   name="ページリセット"
+					   type="button"
+					   value="ページリセット"
+					   onClick="location.reload(true);"
+					   class="bg-blue-400 hover:bg-blue-600 text-white px-4 py-2 text-sm font-bold rounded-lg mr-2" />
+
+				<!-- <input id="word" class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…"> -->
 				<buton class="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
 					<img src="https://assets.codepen.io/5041378/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1600304177&width=512" alt="">
 				</buton>
@@ -24,14 +49,86 @@
 				<h1 class="text-2xl font-bold mb-2">G's Task Manager</h1>
 				<p><small>「 +add 」 ボタンでタスクを追加。ドラッグ＆ドロップでタスクを移動。タスクをダブルクリックで削除可能。</small></p>
 			</div>
-
-			<div class="kanban flex flex-grow px-10 mt-4 space-x-6">
+			<div id="target">
+				<div class="kanban flex flex-grow px-10 mt-4 space-x-6">
+				</div>
 			</div>
 
 		</div>
 		<!-- Component End -->
 
 		<script src="js/main.js" type="module"></script>
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<!-- jquery.highlight-5.js プラグイン -->
+		<script>
+			/*
+			highlight v5
+			Highlights arbitrary terms.
+			<https://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html>
+			MIT license.
+			Johann Burkard
+			<https://johannburkard.de>
+			<mailto:jb@eaio.com>
+			*/
+			jQuery.fn.highlight = function (pat) {
+				function innerHighlight(node, pat) {
+					var skip = 0;
+					if (node.nodeType == 3) {
+						var pos = node.data.toUpperCase().indexOf(pat);
+						pos -= (node.data.substr(0, pos).toUpperCase().length - node.data.substr(0, pos).length);
+						if (pos >= 0) {
+							var spannode = document.createElement('span');
+							spannode.className = 'highlight';
+							var middlebit = node.splitText(pos);
+							var endbit = middlebit.splitText(pat.length);
+							var middleclone = middlebit.cloneNode(true);
+							spannode.appendChild(middleclone);
+							middlebit.parentNode.replaceChild(spannode, middlebit);
+							skip = 1;
+						}
+					}
+					else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+						for (var i = 0; i < node.childNodes.length; ++i) {
+							i += innerHighlight(node.childNodes[i], pat);
+						}
+					}
+					return skip;
+				}
+				return this.length && pat && pat.length ? this.each(function () {
+					innerHighlight(this, pat.toUpperCase());
+				}) : this;
+			};
+			jQuery.fn.removeHighlight = function () {
+				return this.find("span.highlight").each(function () {
+					this.parentNode.firstChild.nodeName;
+					with (this.parentNode) {
+						replaceChild(this.firstChild, this);
+						normalize();
+					}
+				}).end();
+			};
+		</script>
+		<script>
+			function doHighlight() {
+				var word = $("#word").val()
+					.replace(/^\s+|\s+$/g, "")
+					.replace(/\s+/g, " ")
+					.split(" ");
+				for (i in word) {
+					if (word[i] != "") {
+						$("#target").removeHighlight();
+						$("#target").highlight(word[i]);
+						var ypos = $(".highlight").offset().top;
+						window.scrollTo({
+							left: 0,
+							top: ypos,
+							behavior: "smooth"
+						});
+					}
+				}
+			}
+		</script>
 	</body>
 
 </html>
